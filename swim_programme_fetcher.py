@@ -66,23 +66,24 @@ for pool_link in pool_links:
     xnow = 0
     ynow = round( map.height / 2 )
     dow_buffer = 10
+    test_colour = ( 255, 255, 255 )
 
-    while map.pixel( xnow, ynow ) == ( 255, 255, 255 ):
+    while map.pixel( xnow, ynow ) == test_colour:
         xnow += 1
     xtl = xnow
 
     xnow += 1
-    while map.pixel( xnow, ynow ) != ( 255, 255, 255 ):
+    while map.pixel( xnow, ynow ) != test_colour:
         ynow -= 1
     ytl = ynow - dow_buffer
 
     ynow += 1
-    while map.pixel( xnow, ynow ) != ( 255, 255, 255 ):
+    while map.pixel( xnow, ynow ) != test_colour:
         ynow += 1
     ybr = ynow + dow_buffer
 
     xnow = map.width - 1
-    while map.pixel( xnow, ynow ) == ( 255, 255, 255 ):
+    while map.pixel( xnow, ynow ) == test_colour:
         xnow -= 1
     xbr = xnow    
 
@@ -91,6 +92,7 @@ for pool_link in pool_links:
     programme_svgs[ pool_name ] = base64.b64encode( png ).decode( "utf-8" )
 
 # Write this lot to file
+# TODO I'm not sure if this gracefully handles failures so may want to wrap in a try/catch
 file = open( pickle_jar, "wb" )
 pickle.dump( programme_svgs, file )
 file.close()
