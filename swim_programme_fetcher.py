@@ -50,7 +50,7 @@ for pool_link in pool_links:
     new_doc = fitz.open()
     
     for src_page in src_doc:
-        format = fitz.paper_rect( "a4-l" )  # landscape if input suggests
+        format = fitz.paper_rect( "a4-l" )
         page = new_doc.new_page( width = format.width, height = format.height )
         page.show_pdf_page( page.rect, src_doc, src_page.number )
 
