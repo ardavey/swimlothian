@@ -16,24 +16,26 @@ duration = round( end_time - start_time, 4 )
 print( "Content-type: text/html\n\n" )
 
 print( """
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
-<head>
-<title>Midlothian Pool Timetables</title>
-<link rel="stylesheet" type="text/css" href="style.css" />
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-</head>
-<body>
-
-<h2>Midlothian Pool Timetables</h2>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Midlothian Pool Timetables</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <title>Midlothian Pool Timetables</title>
+    </head>
+    <body>
+        <h1>Midlothian Pool Timetables</h1>
 """ )
 
 for venue, prog in programme_svgs.items():
-    print( "<h3>" + venue + "</h3>" )
-    print( '<p><img src="data:image/png;base64,' + prog + '" /></p>' )
+    print( """
+        <h2>%s</h2>
+        <p><img src="data:image/png;base64,%s" /></p>
+""" % ( venue, prog ) )
 
 print( """
-<p><a href="https://www.midlothian.gov.uk/directory/3/leisure_centres_and_swimming_pools/category/9">Source page</a></p>
-<p><small>Page generated in %s seconds</small></p>
-</body>
+        <p><a href="https://www.midlothian.gov.uk/directory/3/leisure_centres_and_swimming_pools/category/9">Source page</a></p>
+    </body>
 </html>
-""" % ( duration ) )
+""" )
