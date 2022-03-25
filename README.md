@@ -3,7 +3,7 @@ A scraper for Midlothian swimming pool programmes to present cropped down versio
 
 Currently deployed at https://swim.ardavey.com
 
-`swim_programme_fetcher.py` runs hourly scrapes programme download links from several pages of the bloated Midlothian Leisure site.
+`swim_programme_fetcher.py` runs hourly to scrape swimming programme download links from multiple pages of the bloated Midlothian Leisure site.
 
 It then:
  * Grabs the timetable page from each PDF
