@@ -1,10 +1,10 @@
 # swimlothian
-A scraper for Midlothian swimming pool programmes to present cropped down versions on a single page.
+A scraper for Midlothian Council swimming pool programmes to present cropped down versions on a single page.
 
 Currently deployed at https://swim.ardavey.com
 
 `swim_programme_fetcher.py` runs in the background every hour and does the following:
- * Browses through the relevant Midlothin Leisure web pages (for each swimming venue)
+ * Browses through the relevant Midlothian Leisure web pages (for each swimming venue)
  * Works out all of the applicable venue names and determines the download links for their programmes
  * Downloades each PDF programme and keeps only the timetable page
  * Crops the pages down to the minimum necessary size, removing all the info that's not part of the timetable itself (this varies due to inconsistent templating)
