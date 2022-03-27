@@ -10,7 +10,10 @@ import pickle
 
 base_url = "https://www.midlothian.gov.uk"
 path = "/directory/3/leisure_centres_and_swimming_pools/category/9"
-pickle_jar = "/tmp/pickled_pool_programmes"
+pickle_jar = "/home/ardavey/tmp/pickled_pool_programmes"
+
+# This is the pixel width of the final timetable images.
+image_width = 1280
 
 # Grab the page that links out to all of the individual pool pages
 # then grab the URLs for those pages from the links.
@@ -24,7 +27,7 @@ pool_links = soup.find_all( href = re.compile("directory_record") )
 # Some pages link directly and some link to a page which offers the PDF download link. Luckily
 # the direct PDF URLs can be determined directly from the d/l pages following a pattern so we
 # can cheat a little and save some web page loads.
-programme_svgs = {}
+programme_imgs = {}
 
 for pool_link in pool_links:
     with urllib.request.urlopen( base_url + pool_link[ "href" ] ) as response:
@@ -63,6 +66,7 @@ for pool_link in pool_links:
     # Follow the vertical line at the left x point up and down until we hit white again
     # to get the y values (then add on a buffer to account for the offset header and footer rows)
     map = new_doc[0].get_pixmap()
+
     xnow = 0
     ynow = round( map.height / 2 )
     dow_buffer = 10
@@ -88,11 +92,14 @@ for pool_link in pool_links:
     xbr = xnow    
 
     clip = fitz.Rect( xtl, ytl, xbr, ybr )
-    png = new_doc[0].get_pixmap( dpi = 96, clip = clip ).tobytes()
-    programme_svgs[ pool_name ] = base64.b64encode( png ).decode( "utf-8" )
+    
+    crop_width = xbr - xtl
+    zoom = ( map.width / crop_width ) * ( ( image_width - 1 ) / map.width )
+    mat = fitz.Matrix( zoom, zoom )
+
+    png = new_doc[0].get_pixmap( clip = clip, matrix = mat ).tobytes()
+    programme_imgs[ pool_name ] = base64.b64encode( png ).decode( "utf-8" )
 
 # Write this lot to file
-# TODO I'm not sure if this gracefully handles failures so may want to wrap in a try/catch
-file = open( pickle_jar, "wb" )
-pickle.dump( programme_svgs, file )
-file.close()
+with open( pickle_jar, "wb" ) as file:
+    pickle.dump( programme_imgs, file )
