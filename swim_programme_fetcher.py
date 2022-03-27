@@ -98,6 +98,9 @@ for pool_link in pool_links:
 
     clip = fitz.Rect( xtl, ytl, xbr, ybr )
     
+    # Because all the PDFs use a slightly different template, all the cropped images are a different
+    # width, which is ugly.  Determine the zoom factor needed to take them up to our target image
+    # size and apply it.
     crop_width = xbr - xtl
     zoom = ( map.width / crop_width ) * ( ( image_width - 1 ) / map.width )
     mat = fitz.Matrix( zoom, zoom )
@@ -105,9 +108,10 @@ for pool_link in pool_links:
     png = new_doc[0].get_pixmap( clip = clip, matrix = mat ).tobytes()
     programme_imgs[ "progs" ][ pool_name ] = base64.b64encode( png ).decode( "utf-8" )
 
+# Store the date/time that we downloaded this data, in local timezone.
 now = dt.now( tz = pytz.timezone( "Europe/London" ) )
 programme_imgs[ "metadata" ][ "last_updated" ] = now.strftime( "%d/%m/%Y at %H:%M:%S" )
 
-# Write this lot to file
+# Write the data to file ready for the webpage to pick up!
 with open( pickle_jar, "wb" ) as file:
     pickle.dump( programme_imgs, file )

@@ -32,7 +32,6 @@ print( """
         <p>These timetables are automatically extracted from the PDFs which are available to download via the <a href="https://www.midlothian.gov.uk/directory/3/leisure_centres_and_swimming_pools/category/9">Midlothian Council website</a>.</p>
         <p>They are updated every hour and presented here for convenience, but no guarantees are given for their contents.</p>
         <p><small>Last updated: %s</small></p>
-<p></p>
     </body>
 </html>
-""" % programme_imgs[ "metadata" ][ "last_updated" ] )
+""" % ( programme_imgs[ "metadata" ][ "last_updated" ] ) )
