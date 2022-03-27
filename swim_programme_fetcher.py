@@ -7,6 +7,9 @@ import gzip
 import base64
 from bs4 import BeautifulSoup
 import pickle
+from datetime import datetime as dt
+from time import strftime
+import pytz
 
 base_url = "https://www.midlothian.gov.uk"
 path = "/directory/3/leisure_centres_and_swimming_pools/category/9"
@@ -28,6 +31,8 @@ pool_links = soup.find_all( href = re.compile("directory_record") )
 # the direct PDF URLs can be determined directly from the d/l pages following a pattern so we
 # can cheat a little and save some web page loads.
 programme_imgs = {}
+programme_imgs[ "progs" ] = {}
+programme_imgs[ "metadata" ] = {}
 
 for pool_link in pool_links:
     with urllib.request.urlopen( base_url + pool_link[ "href" ] ) as response:
@@ -98,7 +103,10 @@ for pool_link in pool_links:
     mat = fitz.Matrix( zoom, zoom )
 
     png = new_doc[0].get_pixmap( clip = clip, matrix = mat ).tobytes()
-    programme_imgs[ pool_name ] = base64.b64encode( png ).decode( "utf-8" )
+    programme_imgs[ "progs" ][ pool_name ] = base64.b64encode( png ).decode( "utf-8" )
+
+now = dt.now( tz = pytz.timezone( "Europe/London" ) )
+programme_imgs[ "metadata" ][ "last_updated" ] = now.strftime( "%d/%m/%Y at %H:%M:%S" )
 
 # Write this lot to file
 with open( pickle_jar, "wb" ) as file:
