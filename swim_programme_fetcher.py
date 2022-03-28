@@ -16,7 +16,7 @@ path = "/directory/3/leisure_centres_and_swimming_pools/category/9"
 pickle_jar = "/home/ardavey/tmp/pickled_pool_programmes"
 
 # This is the pixel width of the final timetable images.
-image_width = 1280
+image_width = 1024
 
 # Grab the page that links out to all of the individual pool pages
 # then grab the URLs for those pages from the links.
@@ -32,7 +32,7 @@ pool_links = soup.find_all( href = re.compile("directory_record") )
 # can cheat a little and save some web page loads.
 programme_imgs = {}
 programme_imgs[ "progs" ] = {}
-programme_imgs[ "metadata" ] = {}
+programme_imgs[ "metadata" ] = { "location": "Midlothian" }
 
 for pool_link in pool_links:
     with urllib.request.urlopen( base_url + pool_link[ "href" ] ) as response:
