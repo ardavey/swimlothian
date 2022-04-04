@@ -31,7 +31,7 @@ for venue, prog in programme_imgs[ "progs" ].items():
 print( """
         <p>These timetables are automatically extracted from the PDFs which are available to download via the <a href="https://www.midlothian.gov.uk/directory/3/leisure_centres_and_swimming_pools/category/9">Midlothian Council website</a>.</p>
         <p>They do not reflect any potential temporary timetables or amendments which may be in effect and documented separately on the source website.</p>
-        <p>Programmes are updated every hour and presented here for convenience, but so guarantees are given for their contents so please use at your own discretion.</p>
+        <p>Programmes are updated every hour and presented here for convenience, but no guarantees are given for their contents so please use at your own discretion.</p>
         <p><small>Last updated: %s</small></p>
     </body>
 </html>
