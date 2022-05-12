@@ -21,6 +21,7 @@ def main():
 
     # Grab the page that links out to all of the individual pool pages
     # then grab the URLs for those pages from the links.
+    print( "Fetching page: " + base_url + path )
     with urllib.request.urlopen( base_url + path ) as response:
         page_content = response.read()
     
@@ -47,7 +48,7 @@ def main():
         
         # Turn: <base URL>/downloads/file/1234/foobar
         # Into: <base URL>/download/downloads/id/1234/foobar.pdf
-        programme_link = pool_soup.find( href = re.compile( "download", re.IGNORECASE ) )
+        programme_link = pool_soup.find( href = re.compile( "/downloads/.*_(?:swimming|pool)_", re.IGNORECASE ) )
         p = re.compile( "downloads/file/(.*)" )
         programme_url = p.sub( r"download/downloads/id/\1.pdf", programme_link[ "href" ] )
 
