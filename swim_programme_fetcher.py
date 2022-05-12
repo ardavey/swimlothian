@@ -21,7 +21,6 @@ def main():
 
     # Grab the page that links out to all of the individual pool pages
     # then grab the URLs for those pages from the links.
-    print( "Fetching page: " + base_url + path )
     with urllib.request.urlopen( base_url + path ) as response:
         page_content = response.read()
     
