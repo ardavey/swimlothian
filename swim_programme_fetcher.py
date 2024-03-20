@@ -26,6 +26,8 @@ def main():
     
     soup = BeautifulSoup( page_content, "html.parser" )
     pool_links = soup.find_all( href = re.compile("directory_record") )
+    # Hack - ML council have changed the format for Penicuik pool and removed the PDF so we can't handle it.
+    del pool_links[-1]
 
     # Visit each of the pool pages, grab the venue name and determine the URL for the PDF programme.
     # Some pages link directly and some link to a page which offers the PDF download link. Luckily
